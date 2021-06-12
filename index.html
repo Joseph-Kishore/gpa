@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CGPC</title>
+    <style type="text/css">
+       body{
+            background-repeat: no-repeat;
+            background-size:cover;
+        }
+        h1{ 
+            font-family: "georgia";
+        }
+        #in{
+            background-color: #f4dfb2;
+            border-radius: 10px;
+            height: 450px;
+        
+            margin-top: 10%;
+            align-content: center;
+            opacity: 0.95;
+        }
+        input,button{
+        
+            border-radius: 7px;
+            height: 35px;
+        }
+        label{
+            color: #000;
+            height: 20px;
+        } 
+    </style>
+</head>
+<body>
+    <div id="in" align="center">
+        <table>
+            <tr align="center">
+                <td colspan="2"><h1 align="center">CGPA Calculator</h1></td>
+            </tr>
+            <tr>
+            <td><label>Number of subjects</label></td>
+            <td><input type="text" id="sn" /></td>
+            </tr>
+            <tr>
+            <td><label>Number of Labs</label></td>
+            <td><input type="text" id="ln" /></td>
+            </tr>
+            <tr align="center">
+            <td colspan="2"><button name="s1" onclick="getin()">Submit</button></td>
+            </tr>
+            <tr id="hide1" style="visibility: hidden;">
+                <td>Subject Grades</td>
+                <td id="sub"></td>
+            </tr>
+            <tr id="hide2" style="visibility: hidden;">
+                <td>Lab Grades</td>
+                <td id="lab"></td>
+            </tr>
+            <tr align="center">
+                <td colspan="2"><button name="s2" id="hide3" onclick="calc()" style="visibility: hidden;">Calculate</button></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <h3 id="msg"></h3>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+<script type="text/javascript">
+    function getin() {
+        var sn= parseInt(document.getElementById('sn').value);
+        var ln= parseInt(document.getElementById('ln').value);
+        // var v= document.createElement('input');
+        // v.value=sn+ln;
+        // document.getElementById('in').appendChild(v);
+        var sub=document.getElementById('sub');
+        while(sub.hasChildNodes()){
+            sub.removeChild(sub.lastChild);
+        }
+        var lab=document.getElementById('lab');
+        while(lab.hasChildNodes()){
+            lab.removeChild(lab.lastChild);
+        }
+        for (var i =0; i <sn; i++) {
+            var inp= document.createElement('input');
+            inp.type='text';
+            inp.name='sub'+i;
+            inp.id=inp.name;
+            inp.size=1;
+            sub.appendChild(inp);
+        }
+        for(var j=0;j<ln;j++){
+            var inp= document.createElement('input');
+            inp.type='text';
+            inp.name='lab'+j;
+            inp.id=inp.name;
+            inp.size=1;
+            lab.appendChild(inp);
+        }
+        for(var i=1;i<=3;i++){
+            document.getElementById('hide'+i).style.visibility='visible';
+        }
+    }
+    function calc()
+    {
+        var sn=document.getElementById('sn').value;
+        var ln=document.getElementById('ln').value;
+        var spoints=[];
+        var lpoints=[];
+        var p=0;
+        var gt=0.0;
+        for(var i=0;i<sn;i++)
+        {
+            var x= document.getElementById('sub'+i).value;
+            p=parseInt(gc(x));
+            if(p==0){
+                document.getElementById('msg').innerHTML='we are unable to Calculate CGPA because some Subject is not passed! better luck next time! :';
+                return;
+            }
+            else if(p==-1){
+                document.getElementById('msg').innerHTML='Please enter proper Grades and retry!';
+                return;
+            }
+            else{
+                gt=gt+(p*3);
+            }
+        }
+        for(var i=0;i<ln;i++)
+        {
+            var x=document.getElementById('lab'+i).value;
+            p=parseInt(gc(x));
+            if(p==0){
+                document.getElementById('msg').innerHTML='we are unable to Calculate CGPA because some Subject is not passed! better luck next time! :)';
+                return;
+            }
+            else if(p==-1){
+                document.getElementById('msg').innerHTML='Please enter proper Grades and retry!';
+                return;
+            }
+            else
+                gt=gt+(p*2);
+        }
+        var total = (sn * 30)+ (ln* 20);
+        var avg= gt/total *10;
+        avg=avg.toFixed(2);
+        document.getElementById('msg').innerHTML='Congratulations You got GPA of '+avg+' points';
+    }
+    function gc(ch){
+        switch(ch)
+            {
+                case 'O':
+                case 'o':
+                    return 10;
+                case 'S':
+                case 's':
+                    return 9;
+                case 'A':
+                case 'a':
+                    return 8;
+                case 'B':
+                case 'b':
+                    return 7;
+                case 'C':
+                case 'c':
+                    return 6 ;
+                case 'D':
+                case 'd':
+                    return 5;
+                    break;
+                case 'F':
+                case 'f':
+                    return 0;
+                default:
+                    return -1;
+            }
+    }
+</script>
+</html>
