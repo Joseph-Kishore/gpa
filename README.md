@@ -22,7 +22,7 @@ A simple and interactive GPA (Grade Point Average) Calculator built using HTML, 
 - Lightweight and runs in-browser without any dependencies
  
 📸 Preview
-you can see sample here https://joseph-kishore.github.io/gpa/
+you can see sample here <a href="https://joseph-kishore.github.io/gpa" target="_blank"/>View Demo</a>
 
 🧮 GPA Formula 
 *GPA* = (Σ *credit × grade point*) / (Σ *credits*)
